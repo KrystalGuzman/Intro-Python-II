@@ -132,16 +132,24 @@ while True:
 
         if (verb in ['get', 'take']):
             player.get_item(direct_object)
+            if verb == "take":
+                if direct_object == "redpill":
+                    print("You realize you are stuck there forever. THE END")
+                    break
+                elif direct_object == "bluepill":
+                    print("You run back outside where a helicopter sees you and rescues you. THE END")
+                    break
         
         elif (verb == 'drop'):
             player.drop_item(direct_object)
 
         elif (verb == "swallow"):
             if direct_object == "redpill":
-                print("You realize you are stuck there forever.")
-            if direct_object == "bluepill":
-                print("You run back outside where a helicopter sees you and rescues you.")
-                
+                print("You realize you are stuck there forever. THE END")
+                break
+            elif direct_object == "bluepill":
+                print("You run back outside where a helicopter sees you and rescues you. THE END")
+                break
 
         # describe item
         if (verb in ['x', 'examine']):
