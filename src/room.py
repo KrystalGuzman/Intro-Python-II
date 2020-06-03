@@ -11,11 +11,10 @@ class Room:
     u_to = None
     d_to = None
 
-    def __init__(self, name, description, is_light=False):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
         self.items = []
-        self.is_light = is_light
 
     def get_next_room(self, direction):
 
@@ -63,3 +62,10 @@ class Room:
     # get a list of all Item objects in the room
     def return_items_in_room(self):
         return self.items
+
+    def describe(self):
+
+        print(self.name)
+
+        print("  " + self.description)
+        self.print_items()
