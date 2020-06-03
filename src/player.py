@@ -1,6 +1,6 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
-
+import sys
 class Player:
 
     def __init__(self, starting_room, name):
@@ -90,6 +90,24 @@ class Player:
             else:
                 print("You don't have " + item_name + " in your inventory!")
 
+    def swallow_item(self, item_name):
+        
+        # check for existence of item in inventory
+        requested_item = self.get_item_by_name(item_name)
+        # take pill
+        if requested_item:
+            if item_name == "redpill":
+                print("You realize you are stuck there forever. THE END")
+                sys.exit()
+            elif item_name == "bluepill":
+                print("You run back outside where a helicopter sees you and rescues you. THE END")
+                sys.exit()
+            else:
+                print("You cannot swallow this item.")
+        else:
+                print("You don't have " + item_name + " in your inventory!")
+        
+
     def show_inventory(self):
 
         if len(self.inventory) > 0:
@@ -99,5 +117,5 @@ class Player:
             item_names = [item.get_name() for item in self.inventory]
             print(", ".join(item_names))
         else:
-            print("You don't have a penny to your name.")
+            print("You are carrying nothing.")
     

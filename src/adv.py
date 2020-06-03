@@ -35,8 +35,8 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # add items to rooms
-room['foyer'].add_item(Item("bluepill", "Swallow and you remain in blissful ignorance"))
-room['foyer'].add_item(Item("redpill", "Swallow and reveals an unpleasant truth"))
+room['foyer'].add_item(Item("bluepill", "If you swallow it, you remain in blissful ignorance"))
+room['foyer'].add_item(Item("redpill", "If you swallow it, it will reveal an unpleasant truth"))
 room['foyer'].add_item(Item("gloves", "Common item worn during COVID"))
 room['foyer'].add_item(Item("mask", "Common item worn during COVID"))
 
@@ -132,24 +132,12 @@ while True:
 
         if (verb in ['get', 'take']):
             player.get_item(direct_object)
-            if verb == "take":
-                if direct_object == "redpill":
-                    print("You realize you are stuck there forever. THE END")
-                    break
-                elif direct_object == "bluepill":
-                    print("You run back outside where a helicopter sees you and rescues you. THE END")
-                    break
         
         elif (verb == 'drop'):
             player.drop_item(direct_object)
 
         elif (verb == "swallow"):
-            if direct_object == "redpill":
-                print("You realize you are stuck there forever. THE END")
-                break
-            elif direct_object == "bluepill":
-                print("You run back outside where a helicopter sees you and rescues you. THE END")
-                break
+            player.swallow_item(direct_object)
 
         # describe item
         if (verb in ['x', 'examine']):
