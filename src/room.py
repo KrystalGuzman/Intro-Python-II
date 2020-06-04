@@ -26,9 +26,9 @@ class Room:
             return self.e_to
         elif direction == "w":
             return self.w_to
-        elif direction == "u":
+        elif direction == "up":
             return self.u_to
-        elif direction == "d":
+        elif direction == "down":
             return self.d_to
 
     def print_items(self):

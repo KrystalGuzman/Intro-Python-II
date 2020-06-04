@@ -12,7 +12,7 @@ passages run north and east."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.  You can always end things here by going "down"."""),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
@@ -20,6 +20,8 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+
+    'abyss':    Room("Abyss", """You realize you are stuck and jump into the abyss. THE END"""),
 }
 
 
@@ -30,6 +32,7 @@ room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
 room['foyer'].e_to = room['narrow']
 room['overlook'].s_to = room['foyer']
+room['overlook'].d_to = room['abyss']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
@@ -37,8 +40,9 @@ room['treasure'].s_to = room['narrow']
 # add items to rooms
 room['foyer'].add_item(Item("bluepill", "If you swallow it, you remain in blissful ignorance"))
 room['foyer'].add_item(Item("redpill", "If you swallow it, it will reveal an unpleasant truth"))
-room['foyer'].add_item(Item("gloves", "Common item worn during COVID"))
-room['foyer'].add_item(Item("mask", "Common item worn during COVID"))
+room['overlook'].add_item(Item("gloves", "Common item worn during COVID"))
+room['treasure'].add_item(Item("mask", "Common item worn during COVID"))
+room['narrow'].add_item(Item("bat", "A dead bat that was lying on the floor makes you feel sick"))
 
 #
 # Main
@@ -46,6 +50,7 @@ room['foyer'].add_item(Item("mask", "Common item worn during COVID"))
 
 def menu():
     print("To move, type 'n', 's', 'e', or 'w'.")
+    print("To describe the room, type 'd'.")
     print("To quit, type 'q'.")
     print("To pick up an item, type 'get (item name)' or 'take (item name)'.")
     print("To drop an item, type 'drop (item name).")
@@ -60,8 +65,7 @@ direction_abbreviations = {
     "s": "south",
     "e": "east",
     "w": "west",
-    "u": "up",
-    "d": "down"
+    "down": "down"
 }
 
 direction_adj_phrase = {
@@ -69,8 +73,7 @@ direction_adj_phrase = {
     "s": "to the south",
     "e": "to the east",
     "w": "to the west",
-    "u": "above",
-    "d": "below"
+    "down": "below"
 }
 
 # Make a new player object that is currently in the 'outside' room.
@@ -90,9 +93,8 @@ player = Player(room['outside'], "Adventurer #1")
 
 while True:
 
-    # get player's current room and visibility status
+    # get player's current room
     current_room = player.get_location()
-    
     # prompt for user input
     user_input = input("> ").lower()
 
@@ -108,6 +110,15 @@ while True:
         elif (user_input == 'h'):
             menu()
 
+        elif user_input == "up":
+            if current_room == room['outside']:
+                player.check_bat()
+            else:
+                print("There is nothing up there.")
+
+        elif (user_input == 'd'):
+            current_room.describe()
+
         elif (user_input in ['i' , 'inventory']):
             player.show_inventory()
 
@@ -115,12 +126,15 @@ while True:
 
             # check if current room has an exit in the requested direction
             next_room = current_room.get_next_room(user_input)
-
+                
             if next_room:
                 # move user to new room
                 player.move_to_location(next_room)
                 print("You move " + direction_abbreviations[user_input] + ".")
                 next_room.describe()
+                if user_input == "down":
+                    break
+                
             else:
                 print("There is no exit " + direction_adj_phrase[user_input] + " from here.")
     
