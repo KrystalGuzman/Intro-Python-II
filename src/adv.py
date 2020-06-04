@@ -50,6 +50,7 @@ room['narrow'].add_item(Item("bat", "A dead bat that was lying on the floor make
 
 def menu():
     print("To move, type 'n', 's', 'e', or 'w'.")
+    print("To look around, type 'up' or 'down'.")
     print("To describe the room, type 'd'.")
     print("To quit, type 'q'.")
     print("To pick up an item, type 'get (item name)' or 'take (item name)'.")
@@ -114,7 +115,7 @@ while True:
             if current_room == room['outside']:
                 player.check_bat()
             else:
-                print("There is nothing up there.")
+                print("There is no exit above from here.")
 
         elif (user_input == 'd'):
             current_room.describe()

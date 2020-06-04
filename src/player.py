@@ -123,10 +123,10 @@ class Player:
 
     def check_bat(self):
         if self.inventory == []:
-            print("There is nothing up there.")
+            print("There is nothing up there...")
         for item in self.inventory:
             if item.get_name() == "bat":
-                print("All of a sudden a helicopter appears to rescue you.  Unknowing to you, you start the next global pandemic.")
+                print("All of a sudden a helicopter appears to rescue you.  Unknowing to you, you start the next global pandemic. THE END")
                 sys.exit()
             else:
                 print("There is nothing up there.")
